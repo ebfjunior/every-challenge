@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch --loader ts-node/esm src/server.ts",
+    "dev": "node --watch --loader ./loader.mjs --loader ts-node/esm src/server.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -12,25 +12,26 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js"
+    "start": "node --loader ./loader.mjs dist/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "prisma": {
-    "seed": "ts-node --esm prisma/seed.ts"
+    "seed": "node --loader ./loader.mjs --loader ts-node/esm prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.17.1",
     "@types/express": "^5.0.3",
+    "@types/node": "^24.8.1",
     "express": "^5.1.0",
+    "zod": "^4.1.12",
     "pino": "^9.14.0",
     "pino-http": "^10.3.0",
     "prisma": "^6.17.1",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.9.3",
-    "zod": "^4.1.12"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",

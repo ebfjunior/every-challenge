@@ -3,6 +3,12 @@
     "target": "ES2022",
     "module": "nodenext",
     "moduleResolution": "nodenext",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*.ts", "./src/*.tsx"],
+      "@prisma/*": ["./prisma/*.ts"],
+      "@tests/*": ["./tests/*.ts"]
+    },
     "allowImportingTsExtensions": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
@@ -31,6 +37,6 @@
     "emitDecoratorMetadata": false,
     "experimentalDecorators": false
   },
-  "include": ["src/**/*.ts", "prisma/**/*.ts", "./*.ts"],
-  "exclude": ["node_modules", "dist", "prisma/generated", "**/*.test.ts"]
+  "include": ["src/**/*.ts", "tests/**/*.ts", "prisma/**/*.ts", "./*.ts"],
+  "exclude": ["node_modules", "dist", "prisma/generated"]
 }
