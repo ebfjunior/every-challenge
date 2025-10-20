@@ -1,7 +1,6 @@
 import express from "express";
-
-import type { TaskUseCases } from "@/modules/tasks/task.usecases";
 import { tasksRouter } from "@/modules/tasks/task.routes";
+import type { TaskUseCases } from "@/modules/tasks/task.usecases";
 
 export function createApp(usecases: TaskUseCases): express.Express {
   const app = express();

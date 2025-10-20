@@ -2,29 +2,24 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-const projectRoot = path.resolve(fileURLToPath(new URL(".", import.meta.url))); // eslint-disable-line
+const projectRoot = path.resolve(fileURLToPath(new URL(".", import.meta.url))); // eslint-disable-line no-undef
 const srcDir = path.join(projectRoot, "src");
 const distDir = path.join(projectRoot, "dist");
 const prismaDir = path.join(projectRoot, "prisma");
 const distPrismaDir = path.join(distDir, "prisma");
-const testsDir = path.join(projectRoot, "tests");
-const distTestsDir = path.join(distDir, "tests");
 
 const aliasRoots = [
   {
     prefix: "@/",
     src: srcDir,
     dist: distDir,
+    strict: true,
   },
   {
     prefix: "@prisma/",
     src: prismaDir,
     dist: distPrismaDir,
-  },
-  {
-    prefix: "@tests/",
-    src: testsDir,
-    dist: distTestsDir,
+    strict: false,
   },
 ];
 
@@ -76,6 +71,10 @@ export async function resolve(specifier, context, defaultResolve) {
           shortCircuit: true,
         };
       }
+    }
+
+    if (!alias.strict) {
+      break; // allow Node's resolver to handle optional aliases like @prisma/*
     }
 
     throw new Error(
