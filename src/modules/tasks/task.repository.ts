@@ -7,7 +7,7 @@ import type {
 } from "@/schemas/task.schema";
 
 export interface Filters {
-  userId?: string;
+  userId: string;
   id?: string;
   status?: TaskStatus;
 }
@@ -31,8 +31,8 @@ export class TaskRepository {
     });
   }
 
-  find(id: string): Promise<Task | null> {
-    return prisma.task.findFirst({ where: { id } });
+  find(userId: string, id: string): Promise<Task | null> {
+    return prisma.task.findFirst({ where: { id, userId } });
   }
 
   update(id: string, data: TaskUpdateData): Promise<Task> {

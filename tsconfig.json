@@ -5,9 +5,8 @@
     "moduleResolution": "nodenext",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*.ts", "./src/*.tsx"],
+      "@/*": ["./src/*.ts"],
       "@prisma/*": ["./prisma/*.ts"],
-      "@tests/*": ["./tests/*.ts"]
     },
     "allowImportingTsExtensions": false,
     "esModuleInterop": true,
@@ -37,6 +36,6 @@
     "emitDecoratorMetadata": false,
     "experimentalDecorators": false
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts", "prisma/**/*.ts", "./*.ts"],
+  "include": ["src/**/*.ts", "prisma/**/*.ts", "./*.ts"],
   "exclude": ["node_modules", "dist", "prisma/generated"]
 }

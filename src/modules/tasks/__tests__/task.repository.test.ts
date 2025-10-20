@@ -8,10 +8,7 @@ const prismaTaskMock = vi.hoisted(() => ({
   findFirst: vi.fn(),
   update: vi.fn(),
   delete: vi.fn(),
-})) as Record<
-  "create" | "findMany" | "findFirst" | "update" | "delete",
-  ReturnType<typeof vi.fn>
->;
+}));
 
 vi.mock("@/lib/prisma", () => ({
   prisma: {
@@ -28,6 +25,7 @@ const buildTask = (overrides: Partial<Task> = {}): Task => {
 
   return {
     id: "task-123",
+    userId: "user-123",
     title: "This is a sample task title",
     description: "This is a sample task description",
     status: "TODO",
@@ -36,7 +34,7 @@ const buildTask = (overrides: Partial<Task> = {}): Task => {
     createdAt: timestamp,
     updatedAt: timestamp,
     ...overrides,
-  } satisfies Task;
+  };
 };
 
 describe("Task Repository", () => {
@@ -50,8 +48,8 @@ describe("Task Repository", () => {
     it("should correctly forward the payload to Prisma and return a task", async () => {
       const payload = {
         userId: "user-123",
-        title: "Ship new feature",
-        description: "Pairing session required",
+        title: "Task title",
+        description: "Task description",
         status: "IN_PROGRESS" as TaskStatus,
       };
       const createdTask = buildTask({ ...payload });
@@ -90,13 +88,17 @@ describe("Task Repository", () => {
   describe("#find", () => {
     it("should return the first found task", async () => {
       const id = "task-999";
-      const match = buildTask({ id });
+      const userId = "123";
+
+      const match = buildTask({ id, userId });
 
       prismaTaskMock.findFirst.mockResolvedValue(match);
 
-      const task = await repository.find(id);
+      const task = await repository.find(userId, id);
 
-      expect(prismaTaskMock.findFirst).toHaveBeenCalledWith({ where: { id } });
+      expect(prismaTaskMock.findFirst).toHaveBeenCalledWith({
+        where: { id, userId },
+      });
       expect(task).toBe(match);
     });
   });

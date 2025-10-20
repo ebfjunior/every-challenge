@@ -1,9 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import URL from "node:url";
 
-const projectRoot = path.resolve(fileURLToPath(new URL(".", import.meta.url)));
+const projectRoot = path.resolve(fileURLToPath(new URL(".", import.meta.url))); // eslint-disable-line
 const srcDir = path.join(projectRoot, "src");
 const distDir = path.join(projectRoot, "dist");
 const prismaDir = path.join(projectRoot, "prisma");

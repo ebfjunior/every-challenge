@@ -2,6 +2,7 @@ import type { TaskStatus } from "@/schemas/task.schema";
 
 export interface TaskJson {
   id: string;
+  userId: string;
   title: string;
   description: string;
   status: TaskStatus;
@@ -13,6 +14,7 @@ export interface TaskJson {
 
 export interface Task {
   id: string;
+  userId: string;
   title: string;
   description: string;
   status: TaskStatus;
@@ -29,6 +31,7 @@ const asNullableDate = (value: Date | string | null) =>
 export const fromJson = (json: TaskJson): Task => {
   const {
     id,
+    userId,
     title,
     description,
     status,
@@ -40,6 +43,7 @@ export const fromJson = (json: TaskJson): Task => {
 
   return {
     id,
+    userId,
     title,
     description,
     status,

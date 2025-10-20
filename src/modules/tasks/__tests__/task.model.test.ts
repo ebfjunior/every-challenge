@@ -4,10 +4,11 @@ import type { TaskJson } from "@/modules/tasks/task.model";
 import { fromJson } from "@/modules/tasks/task.model";
 
 describe("Task Model", () => {
-  describe("fromJson", () => {
+  describe("#fromJson", () => {
     it("should create a task from a valid JSON", () => {
       const json: TaskJson = {
         id: "task-123",
+        userId: "user-123",
         title: "This is a test task",
         description: "This is a test task description",
         status: "IN_PROGRESS",
@@ -34,6 +35,7 @@ describe("Task Model", () => {
     it("should convert timestamp strings to Date instances", () => {
       const json: TaskJson = {
         id: "task-456",
+        userId: "user-456",
         title: "This is a test task",
         description: "This is a test task description",
         status: "IN_PROGRESS",
@@ -54,6 +56,7 @@ describe("Task Model", () => {
     it("should keep nullable timestamps as null", () => {
       const json: TaskJson = {
         id: "task-789",
+        userId: "user-789",
         title: "This is a test task",
         description: "This is a test task description",
         status: "TODO",
