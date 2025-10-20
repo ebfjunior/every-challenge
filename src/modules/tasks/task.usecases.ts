@@ -26,7 +26,7 @@ export interface TaskUseCases {
   unarchiveTask: UnarchiveTaskUseCase;
 }
 
-export function createTaskUseCases(): TaskUseCases {
+export function createUseCases(): TaskUseCases {
   const repo = new TaskRepository();
 
   const updateTaskUseCase = createUpdateTaskUseCase({ repository: repo });
