@@ -13,4 +13,4 @@ COPY . .
 
 RUN npx prisma generate
 EXPOSE 3000
-CMD ["sh", "-c", "npm run build && npx prisma migrate deploy && node --loader ./loader.mjs dist/src/server.js"]
+CMD ["sh", "-c", "npm run build && npx prisma migrate deploy && node --watch --loader ./loader.mjs dist/src/server.js"]
