@@ -34,4 +34,16 @@ describe("Search Tasks Use Case", () => {
       expect(result).toEqual(foundTasks);
     });
   });
+
+  describe("When repository fails", () => {
+    it("Then it forwards the error", async () => {
+      const searchTasks = createSearchTasksUseCase({ repository });
+      const filters = { userId, status: "TODO" as TaskStatus };
+      const failure = new Error("query timeout");
+
+      vi.mocked(repository.search).mockRejectedValue(failure);
+
+      await expect(searchTasks(userId, filters)).rejects.toBe(failure);
+    });
+  });
 });

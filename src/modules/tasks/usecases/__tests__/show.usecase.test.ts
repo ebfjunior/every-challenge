@@ -30,4 +30,18 @@ describe("Show Task Use Case", () => {
       expect(result).toBe(task);
     });
   });
+
+  describe("When task does not exist", () => {
+    it("should reject with a not found error", async () => {
+      const showTask = createShowTaskUseCase({ repository });
+
+      vi.mocked(repository.find).mockResolvedValue(null);
+
+      await expect(showTask(userId, taskId)).rejects.toMatchObject({
+        message: "Task not found",
+        name: "NotFoundError",
+        status: 404,
+      });
+    });
+  });
 });

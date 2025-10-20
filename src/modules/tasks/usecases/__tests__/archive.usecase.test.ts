@@ -16,4 +16,15 @@ describe("Archive Task Use Case", () => {
       status: "ARCHIVED",
     });
   });
+
+  it("should forward errors from the update usecase", async () => {
+    const failure = new Error("update failed");
+    const updateTask = vi.fn().mockRejectedValue(failure);
+    const archiveTask = createArchiveTaskUseCase({ updateTask });
+
+    await expect(archiveTask(userId, taskId)).rejects.toBe(failure);
+    expect(updateTask).toHaveBeenCalledWith(userId, taskId, {
+      status: "ARCHIVED",
+    });
+  });
 });

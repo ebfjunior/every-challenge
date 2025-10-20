@@ -163,7 +163,7 @@ describe("Update Task Use Case", () => {
           updateTask(userId, taskId, { status: "DONE" }),
         ).rejects.toMatchObject({
           message: "Invalid transition TODO -> DONE",
-          status: 400,
+          status: 422,
           code: "INVALID_TRANSITION",
         });
       });

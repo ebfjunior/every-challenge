@@ -67,7 +67,7 @@ export const createUpdateTaskUseCase = ({
         const error = new Error(
           `Invalid transition ${currentStatus} -> ${nextStatus}`,
         );
-        (error as Error & { status?: number; code?: string }).status = 400;
+        (error as Error & { status?: number; code?: string }).status = 422;
         (error as Error & { status?: number; code?: string }).code =
           "INVALID_TRANSITION";
         throw error;

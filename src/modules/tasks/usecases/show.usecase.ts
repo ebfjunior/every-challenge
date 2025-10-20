@@ -11,5 +11,16 @@ export type ShowTaskUseCase = (
 ) => Promise<Task | null>;
 
 export function createShowTaskUseCase({ repository }: Deps): ShowTaskUseCase {
-  return (userId, id) => repository.find(userId, id);
+  return async (userId, id) => {
+    const task = await repository.find(userId, id);
+
+    if (!task) {
+      const error = new Error("Task not found");
+      error.name = "NotFoundError";
+      (error as Error & { status?: number; code?: string }).status = 404;
+      throw error;
+    }
+
+    return task;
+  };
 }

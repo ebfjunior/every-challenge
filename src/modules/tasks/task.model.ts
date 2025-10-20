@@ -1,5 +1,5 @@
 import type { TaskStatus } from "@/schemas/task.schema";
-
+export type { TaskStatus };
 export interface TaskJson {
   id: string;
   userId: string;
