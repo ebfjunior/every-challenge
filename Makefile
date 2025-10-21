@@ -4,6 +4,7 @@ default: help
 
 help:
 	@echo "Available targets:"
+	@echo "  make setup          Setup the project"
 	@echo "  make install        Install Node.js dependencies"
 	@echo "  make lint           Run ESLint"
 	@echo "  make typecheck      Run TypeScript compiler"
@@ -47,3 +48,5 @@ prisma-migrate:
 
 prisma-seed:
 	docker compose run api npx prisma db seed
+
+setup: install prisma-generate prisma-migrate prisma-seed
