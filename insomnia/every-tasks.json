@@ -1,0 +1,319 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-10-19T00:00:00.000Z",
+  "__export_source": "cursor.gpt-5-codex",
+  "resources": [
+    {
+      "_id": "wrk_every_challenge_tasks",
+      "parentId": null,
+      "modified": 0,
+      "created": 0,
+      "name": "Every Challenge Tasks API",
+      "description": "Workspace for interacting with the Tasks API endpoints.",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_every_challenge_base",
+      "parentId": "wrk_every_challenge_tasks",
+      "modified": 0,
+      "created": 0,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3000",
+        "user_id": "user-demo",
+        "task_id": "task-demo-1",
+        "cursor": ""
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "user_id",
+          "task_id",
+          "cursor"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 0,
+      "_type": "environment"
+    },
+    {
+      "_id": "fld_tasks_routes",
+      "parentId": "wrk_every_challenge_tasks",
+      "modified": 0,
+      "created": 0,
+      "name": "Tasks",
+      "description": "Task management endpoints secured by the X-User-Id header.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1739900000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_health_check",
+      "parentId": "wrk_every_challenge_tasks",
+      "modified": 0,
+      "created": 0,
+      "url": "{{ _.base_url }}/health",
+      "name": "Health Check",
+      "description": "Simple readiness probe. No authentication required.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1739900000100,
+      "isPrivate": false,
+      "settingStoreCookies": false,
+      "settingSendCookies": false,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_task",
+      "parentId": "fld_tasks_routes",
+      "modified": 0,
+      "created": 0,
+      "url": "{{ _.base_url }}/api/tasks",
+      "name": "Create Task",
+      "description": "Create a new task. Provide title, optional description, and optional status.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Draft project plan\",\n  \"description\": \"Outline launch steps and milestones.\",\n  \"status\": \"TODO\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_create_task_content_type",
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "id": "pair_create_task_user_id",
+          "name": "X-User-Id",
+          "value": "{{ _.user_id }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1739900000200,
+      "isPrivate": false,
+      "settingStoreCookies": false,
+      "settingSendCookies": false,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_list_tasks",
+      "parentId": "fld_tasks_routes",
+      "modified": 0,
+      "created": 0,
+      "url": "{{ _.base_url }}/api/tasks",
+      "name": "List Tasks",
+      "description": "List tasks for the authenticated user with optional filters.",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_list_tasks_limit",
+          "name": "limit",
+          "value": "20",
+          "description": "Number of tasks to return (1-100)."
+        },
+        {
+          "id": "pair_list_tasks_status",
+          "name": "status",
+          "value": "TODO",
+          "description": "Optional status filter.",
+          "disabled": true
+        },
+        {
+          "id": "pair_list_tasks_cursor",
+          "name": "cursor",
+          "value": "{{ _.cursor }}",
+          "description": "Pagination cursor returned by previous page.",
+          "disabled": true
+        }
+      ],
+      "headers": [
+        {
+          "id": "pair_list_tasks_user_id",
+          "name": "X-User-Id",
+          "value": "{{ _.user_id }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1739900000300,
+      "isPrivate": false,
+      "settingStoreCookies": false,
+      "settingSendCookies": false,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_task",
+      "parentId": "fld_tasks_routes",
+      "modified": 0,
+      "created": 0,
+      "url": "{{ _.base_url }}/api/tasks/{{ _.task_id }}",
+      "name": "Get Task",
+      "description": "Fetch a single task by ID.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_get_task_user_id",
+          "name": "X-User-Id",
+          "value": "{{ _.user_id }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1739900000400,
+      "isPrivate": false,
+      "settingStoreCookies": false,
+      "settingSendCookies": false,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_task",
+      "parentId": "fld_tasks_routes",
+      "modified": 0,
+      "created": 0,
+      "url": "{{ _.base_url }}/api/tasks/{{ _.task_id }}",
+      "name": "Update Task",
+      "description": "Update task fields and optionally transition status.",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Draft project plan (rev 2)\",\n  \"description\": \"Incorporate reviewer feedback and next steps.\",\n  \"status\": \"IN_PROGRESS\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_update_task_content_type",
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "id": "pair_update_task_user_id",
+          "name": "X-User-Id",
+          "value": "{{ _.user_id }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1739900000500,
+      "isPrivate": false,
+      "settingStoreCookies": false,
+      "settingSendCookies": false,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_task",
+      "parentId": "fld_tasks_routes",
+      "modified": 0,
+      "created": 0,
+      "url": "{{ _.base_url }}/api/tasks/{{ _.task_id }}",
+      "name": "Delete Task",
+      "description": "Delete a task permanently.",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_delete_task_user_id",
+          "name": "X-User-Id",
+          "value": "{{ _.user_id }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1739900000600,
+      "isPrivate": false,
+      "settingStoreCookies": false,
+      "settingSendCookies": false,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_archive_task",
+      "parentId": "fld_tasks_routes",
+      "modified": 0,
+      "created": 0,
+      "url": "{{ _.base_url }}/api/tasks/{{ _.task_id }}/archive",
+      "name": "Archive Task",
+      "description": "Transition a task to ARCHIVED via convenience endpoint.",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_archive_task_user_id",
+          "name": "X-User-Id",
+          "value": "{{ _.user_id }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1739900000700,
+      "isPrivate": false,
+      "settingStoreCookies": false,
+      "settingSendCookies": false,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_unarchive_task",
+      "parentId": "fld_tasks_routes",
+      "modified": 0,
+      "created": 0,
+      "url": "{{ _.base_url }}/api/tasks/{{ _.task_id }}/unarchive",
+      "name": "Unarchive Task",
+      "description": "Transition an archived task back to TODO via convenience endpoint.",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_unarchive_task_user_id",
+          "name": "X-User-Id",
+          "value": "{{ _.user_id }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1739900000800,
+      "isPrivate": false,
+      "settingStoreCookies": false,
+      "settingSendCookies": false,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    }
+  ]
+}
+
